@@ -6,5 +6,5 @@ const headers = {
   'Upgrade-Insecure-Requests': '1'
 };
 
-const data = await fetch('https://api.moomoo.io/verify', { headers });
+const data = await fetch('https://api.moomoo.io/verify');
 console.log(data);
