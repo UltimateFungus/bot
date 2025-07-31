@@ -21,7 +21,7 @@ async function solve(data) {
     return token;
 }
 
-const thisServerAddress = "wss://sgs-wctwk-clcg4.frankfurt.moomoo.io";
+const thisServerAddress = "wss://sgs-wctwk-8f2pw.frankfurt.moomoo.io";
 
 async function challenge() {
         const rawData = await fetch('https://corsproxy.io/?url=' + "https://api.moomoo.io/verify");
