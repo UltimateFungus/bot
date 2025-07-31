@@ -29,6 +29,7 @@ async function challenge() {
         const token = await solve(data);
         new Bot("hi",token);
 }
+challenge();
 class Bot {
 	constructor(name, token) {
         console.log("SENT");
