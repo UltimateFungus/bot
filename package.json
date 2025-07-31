@@ -17,5 +17,8 @@
     "url": "https://github.com/UltimateFungus/bot/issues"
   },
   "homepage": "https://github.com/UltimateFungus/bot#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "altcha-lib": "^1.3.0"
+  }
 }
