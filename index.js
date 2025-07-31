@@ -1,14 +1,12 @@
 import { solveChallenge, solveChallengeWorkers } from "altcha-lib";
 
 async function solve(data) {
-    const result = await solveChallengeWorkers(
-        "./node_modules/altcha-lib/dist/worker.js",
-        8,
+    const result = await solveChallenge(
         data.challenge,
         data.salt,
         data.algorithm,
         data.maxnumber
-    );
+    ).promise;
     const tokenObj = JSON.stringify({
       algorithm: data.algorithm,
       challenge: data.challenge,
