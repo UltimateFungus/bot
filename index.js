@@ -23,7 +23,8 @@ const thisServerAddress = "wss://sgs-wctwk-8f2pw.frankfurt.moomoo.io";
 
 async function challenge() {
         const rawData = await fetch('https://corsproxy.io/?url=' + "https://api.moomoo.io/verify");
-        const data = await rawData.json()
+        const data = await rawData.json();
+        console.log(data);
         const token = await solve(data);
         new Bot("hi",token);
 }
