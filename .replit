@@ -6,3 +6,7 @@ channel = "stable-25_05"
 
 [deployment]
 run = ["sh", "-c", "node index.js"]
+
+[[ports]]
+localPort = 4200
+externalPort = 80

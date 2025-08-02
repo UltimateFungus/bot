@@ -1,6 +1,6 @@
 import { solveChallenge, solveChallengeWorkers } from "altcha-lib";
 
-import { encoder, decoder } from "./moo.js";
+import { Encoder, Decoder } from "./moo.js";
 
 import WebSocket from "ws";
 
@@ -10,6 +10,7 @@ const wss = new WebSocketServer({port: 4200}, console.log("Listening on port 420
 
 wss.on("connection", ws => {
     console.log("open");
+    ws.on("close", () => console.log("close"));
     ws.on("message", e => ((data = JSON.parse(e)) => {
         switch(data.type) {
             case "bot":
@@ -18,6 +19,7 @@ wss.on("connection", ws => {
             break;
         }
     })())
+    ws.on("error", e => console.log(e));
 })
 
 async function solve(data) {
@@ -40,12 +42,14 @@ async function solve(data) {
     const token = btoa(tokenObj);
     return token;
 }
+
 async function sendBot(server, name) {
         const rawData = await fetch('https://corsproxy.io/?url=' + "https://api.moomoo.io/verify");
         const data = await rawData.json();
         const token = await solve(data);
         new Bot(server, name, token);
 }
+
 class Bot {
 	constructor(server, name, token) {
 		this.ws = new WebSocket(`${server}/?token=${encodeURIComponent(`alt:${token}`)}`, {
@@ -54,28 +58,28 @@ class Bot {
             }
         });
 		this.ws.binaryType = "arraybuffer";
-		const e = new encoder;
-		const d = new decoder;
+		const encoder = new Encoder;
+		const decoder = new Decoder;
 		this.send = function (e) {
 			const t = Array.prototype.slice.call(arguments, 1),
-				i = e.encode([e, t]);
+				i = encoder.encode([e, t]);
 			this.ws.send(i);
 		};
-		this.ws.onopen = e => {
-			log("bot open");
+		this.ws.onopen = () => {
+			console.log("bot open");
 			this.send("M", {
 				name: name,
 				moofoll: 1,
 				skin: 0
 			})
 		}
-		this.ws.onclose = e => log("bot close");
+		this.ws.onclose = () => console.log("bot close");
 		this.ws.onmessage = e => {
 			const uint = new Uint8Array(e.data)
-			const data = d.decode(uint);
+			const data = decoder.decode(uint);
 			switch (data[0]) {
 				case "P":
-					log("bot respawn");
+					console.log("bot respawn");
 					this.send("M", {
 						name: name,
 						moofoll: 1,

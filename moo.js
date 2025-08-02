@@ -1304,7 +1304,5 @@ var va = 16,
 			},
 			e
 	}();
-const encoder = new Encoder;
-const decoder = new Decoder;
-export { encoder, decoder }
+export { Encoder, Decoder }
 
